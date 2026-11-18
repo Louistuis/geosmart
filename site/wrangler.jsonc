@@ -1,0 +1,7 @@
+{
+  // Static site for geosmart.lou15.com. Deploy: cd site && npx wrangler@4 deploy
+  "name": "geosmart-site",
+  "compatibility_date": "2026-10-01",
+  "assets": { "directory": "./public", "not_found_handling": "404-page" },
+  "routes": [{ "pattern": "geosmart.lou15.com", "custom_domain": true }]
+}

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GeoSmart</title>
+<meta name="description" content="Claude AI inside the GeoGebra Classic 6 you already have, on macOS and Windows. Right-click anything to explain it, analyse it or draw something new. Free and MIT licensed.">
+<meta property="og:title" content="GeoSmart">
+<meta property="og:description" content="Claude AI inside GeoGebra Classic 6. Right-click to explain, analyse or draw. macOS and Windows, free, MIT licensed.">
+<meta property="og:image" content="https://geosmart.lou15.com/panel.webp">
+<meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #f5f5f7;
+  --surface: #ffffff;
+  --fg: #1d1d1f;
+  --dim: #5f5f64;
+  --faint: #6e6e73;
+  --line: rgba(0, 0, 0, 0.08);
+  --accent: #5b4ee0;
+  --accent-ink: #ffffff;
+  --shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  --display: "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --text: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  --rounded: ui-rounded, "SF Pro Rounded", -apple-system, sans-serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --surface: #111113;
+    --fg: #f5f5f7;
+    --dim: #a1a1a6;
+    --faint: #8e8e93;
+    --line: rgba(255, 255, 255, 0.1);
+    --accent: #8b7fff;
+    --accent-ink: #0b0820;
+    --shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.5 var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+
+nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.brand { display: flex; align-items: center; gap: 10px; font: 600 16px/1 var(--display); letter-spacing: -0.01em; }
+.brand img { width: 28px; height: 28px; }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); font: 500 14px/1 var(--text); transition: border-color 0.2s; }
+.pill:hover { border-color: var(--faint); }
+.pill svg { width: 16px; height: 16px; fill: currentColor; }
+
+header { text-align: center; padding: 64px 0 36px; }
+.eyebrow { display: inline-block; font: 600 13px/1 var(--text); color: var(--accent); letter-spacing: 0.02em; margin-bottom: 18px; }
+h1 { font: 700 clamp(40px, 7.2vw, 80px)/1.02 var(--display); letter-spacing: -0.035em; margin: 0 auto; max-width: 13ch; }
+.lede { color: var(--dim); font-size: clamp(17px, 2.2vw, 21px); line-height: 1.45; max-width: 33em; margin: 22px auto 0; }
+.cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 34px; }
+.btn { display: inline-flex; align-items: center; gap: 11px; height: 56px; padding: 0 24px 0 20px; border-radius: 999px; font: 600 16px/1 var(--text); transition: transform 0.2s, box-shadow 0.3s, border-color 0.2s; }
+.btn:active { transform: scale(0.97); }
+.btn svg { width: 20px; height: 20px; fill: currentColor; flex: none; }
+.btn .two { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.btn .two small { font: 500 11.5px/1 var(--text); opacity: 0.7; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.secondary { background: var(--surface); border: 1px solid var(--line); }
+.btn.secondary:hover { border-color: var(--faint); }
+.fine { color: var(--faint); font-size: 13.5px; margin-top: 16px; }
+.fine a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line); }
+
+.shot { margin: 28px auto 0; max-width: 1000px; border-radius: 18px; overflow: hidden; box-shadow: var(--shadow); background: #fff; }
+.shot img { display: block; width: 100%; height: auto; }
+figcaption { text-align: center; color: var(--dim); font-size: 15px; margin: 18px auto 0; max-width: 36em; }
+
+section { padding: 88px 0 0; }
+h2 { font: 700 clamp(30px, 4.6vw, 48px)/1.08 var(--display); letter-spacing: -0.03em; margin: 0 0 14px; text-align: center; }
+.sub { text-align: center; color: var(--dim); font-size: 19px; max-width: 34em; margin: 0 auto; }
+
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 40px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px 22px 22px; }
+.card .ic { width: 34px; height: 34px; border-radius: 10px; background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); display: grid; place-items: center; margin-bottom: 16px; }
+.card .ic svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.card h3 { font: 600 18px/1.25 var(--display); letter-spacing: -0.01em; margin: 0 0 6px; }
+.card p { margin: 0; color: var(--dim); font-size: 15.5px; line-height: 1.5; }
+kbd { font: 600 0.86em/1 var(--rounded); padding: 3px 6px 4px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); white-space: nowrap; color: var(--fg); }
+
+.install { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 40px; }
+.install .card { padding: 26px 24px; }
+.install h3 { display: flex; align-items: center; gap: 10px; font-size: 20px; margin-bottom: 14px; }
+.install h3 svg { width: 20px; height: 20px; fill: currentColor; }
+ol { margin: 0; padding-left: 1.25em; color: var(--dim); font-size: 15.5px; }
+ol li { margin: 0 0 9px; padding-left: 4px; }
+ol b { color: var(--fg); font-weight: 600; }
+ol a { color: var(--accent); }
+code { font: 13.5px/1.4 var(--mono); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 1px 5px; color: var(--fg); overflow-wrap: anywhere; }
+.note { margin: 18px auto 0; text-align: center; color: var(--dim); font-size: 15px; max-width: 40em; }
+
+.how { max-width: 760px; margin: 36px auto 0; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 8px 24px; }
+.how div { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); font-size: 15.5px; color: var(--dim); }
+.how div:last-child { border-bottom: 0; }
+.how b { color: var(--fg); font-weight: 600; min-width: 8.5em; }
+
+footer { padding: 96px 0 48px; text-align: center; color: var(--faint); font-size: 13px; line-height: 1.6; }
+footer p { max-width: 44em; margin: 0 auto 10px; }
+footer a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line); }
+
+@media (max-width: 860px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+  .install { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  header { padding-top: 40px; }
+  .grid { grid-template-columns: 1fr; }
+  .btn { width: 100%; justify-content: center; }
+  .shot { border-radius: 12px; }
+  .how div { flex-direction: column; gap: 4px; }
+  section { padding-top: 64px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="brand" href="/"><img src="/icon.svg" alt="">GeoSmart</a>
+    <a class="pill" href="https://github.com/Louistuis/geosmart"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+  </nav>
+
+  <header>
+    <span class="eyebrow">For GeoGebra Classic 6 on macOS and Windows</span>
+    <h1>Claude, right inside GeoGebra.</h1>
+    <p class="lede">Right-click a function, a point or an empty spot on the graph. Claude explains it, analyses it, or draws what you ask, working on your live construction. Everything else in GeoGebra stays exactly as it was.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/Louistuis/geosmart/releases/latest/download/GeoSmart-macOS.zip">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.65.8-3.33.8-.7 0-1.75-.78-2.88-.76-1.47.02-2.84.86-3.6 2.18-1.55 2.68-.4 6.63 1.1 8.8.74 1.06 1.6 2.25 2.74 2.2 1.1-.04 1.52-.71 2.85-.71 1.32 0 1.7.71 2.86.69 1.19-.02 1.94-1.07 2.66-2.14.85-1.23 1.19-2.43 1.2-2.49-.02-.01-2.29-.88-2.3-3.53zM14.2 6.12c.6-.74 1.01-1.75.9-2.77-.87.04-1.94.59-2.56 1.32-.56.64-1.05 1.69-.92 2.68.97.08 1.97-.49 2.58-1.23z"/></svg>
+        <span class="two"><b>Download for Mac</b><small>macOS 12 or later</small></span>
+      </a>
+      <a class="btn secondary" href="https://github.com/Louistuis/geosmart/releases/latest/download/GeoSmart-Windows.zip">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.1l7.4-1v7.1H3V5.1zm0 13.8l7.4 1v-7H3v6zm8.2 1.1L21 21.4V12.9h-9.8V20zm0-15.9v7.1H21V2.6l-9.8 1.5z"/></svg>
+        <span class="two"><b>Download for Windows</b><small>Windows 10 or 11</small></span>
+      </a>
+    </div>
+    <p class="fine">Free and open source. You bring your own <a href="https://console.anthropic.com/settings/keys">Anthropic API key</a>.</p>
+  </header>
+
+  <figure class="shot" style="margin-top:20px"><img src="/menu.webp" width="2000" height="1122" alt="GeoGebra's right-click menu on the function f, with three new items at the bottom: Explain f with AI, Analyse f with AI, and Ask AI."></figure>
+  <figcaption>Three quiet items at the bottom of GeoGebra's own right-click menu. Nothing else changes.</figcaption>
+
+  <section>
+    <h2>It works on your construction.</h2>
+    <p class="sub">Claude uses GeoGebra's own commands and CAS, then looks at the drawing to check the result.</p>
+    <figure class="shot"><img src="/panel.webp" width="2000" height="1122" loading="lazy" alt="GeoGebra with the AI panel open on the right. Claude solved f'(x)=0 in the CAS, marked the maximum in red and the minimum in blue on the graph, and explained the shape of x cubed minus 3x."></figure>
+    <figcaption>Analyse f: Claude solves with the CAS, marks the turning points and zeros, and explains why. One click undoes it all.</figcaption>
+  </section>
+
+  <section>
+    <h2>Discreet by design.</h2>
+    <div class="grid">
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4l7 17 2.5-7.5L21 11z"/></svg></div><h3>Right-click anything</h3><p>Explain, analyse, or ask about any object, from the graph or the Algebra view. Right-click empty space to draw something new there.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 17l5-5 4 4 7-8"/><path d="M15 8h5v5"/></svg></div><h3>Real GeoGebra commands</h3><p>Claude runs input-bar commands, checks the maths with the CAS, styles and deletes objects, and moves the view.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 010 10h-3"/></svg></div><h3>One-step undo</h3><p>Everything Claude changed in a reply comes back with a single Undo. You always see what it ran.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg></div><h3>Your model, your effort</h3><p>Pick Claude Sonnet 5.5 or Opus 5.5, and the effort from low to max. Reasoning summaries and a read-only mode are one switch away.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M7 10h.01M11 10h.01M15 10h.01M8 14h8"/></svg></div><h3>Keyboard first</h3><p><kbd>⌘K</kbd> quick ask, <kbd>⌘J</kbd> side panel, <kbd>⌘,</kbd> settings. On Windows it is <kbd>Ctrl</kbd> instead of <kbd>⌘</kbd>.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></div><h3>Your key stays yours</h3><p>Stored encrypted in the macOS Keychain or Windows' per-user encryption, and sent only to Anthropic. No account, no middleman.</p></div>
+    </div>
+    <p class="note">Speaks Norwegian when GeoGebra does: the menu reads <i>Forklar f med KI</i>, and Claude answers in the language you write in.</p>
+  </section>
+
+  <section id="install">
+    <h2>Install in a minute.</h2>
+    <p class="sub">GeoSmart patches the GeoGebra Classic 6 you already have. Quit GeoGebra first.</p>
+    <div class="install">
+      <div class="card">
+        <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.65.8-3.33.8-.7 0-1.75-.78-2.88-.76-1.47.02-2.84.86-3.6 2.18-1.55 2.68-.4 6.63 1.1 8.8.74 1.06 1.6 2.25 2.74 2.2 1.1-.04 1.52-.71 2.85-.71 1.32 0 1.7.71 2.86.69 1.19-.02 1.94-1.07 2.66-2.14.85-1.23 1.19-2.43 1.2-2.49-.02-.01-2.29-.88-2.3-3.53zM14.2 6.12c.6-.74 1.01-1.75.9-2.77-.87.04-1.94.59-2.56 1.32-.56.64-1.05 1.69-.92 2.68.97.08 1.97-.49 2.58-1.23z"/></svg>macOS</h3>
+        <ol>
+          <li>Install <a href="https://apps.apple.com/app/geogebra-classic-6/id1182481622">GeoGebra Classic 6</a> into Applications.</li>
+          <li><a href="https://github.com/Louistuis/geosmart/releases/latest/download/GeoSmart-macOS.zip">Download GeoSmart for Mac</a> and unzip it.</li>
+          <li>Right-click <b>Install GeoSmart.command</b> and choose Open. It asks for your Mac password.</li>
+          <li>Open GeoGebra, press <kbd>⌘,</kbd> and paste your API key.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.1l7.4-1v7.1H3V5.1zm0 13.8l7.4 1v-7H3v6zm8.2 1.1L21 21.4V12.9h-9.8V20zm0-15.9v7.1H21V2.6l-9.8 1.5z"/></svg>Windows</h3>
+        <ol>
+          <li>Install <a href="https://www.geogebra.org/download?lang=en">GeoGebra Classic 6</a> from geogebra.org. The Microsoft Store version can't be patched.</li>
+          <li><a href="https://github.com/Louistuis/geosmart/releases/latest/download/GeoSmart-Windows.zip">Download GeoSmart for Windows</a> and extract it.</li>
+          <li>Double-click <b>Install GeoSmart.cmd</b>. No admin rights needed.</li>
+          <li>Open GeoGebra, press <kbd>Ctrl+,</kbd> and paste your API key.</li>
+        </ol>
+      </div>
+    </div>
+    <p class="note">When GeoGebra updates, run the installer again. To remove GeoSmart, run <b>Uninstall GeoSmart</b> and the original files come back.</p>
+  </section>
+
+  <section>
+    <h2>What it changes.</h2>
+    <p class="sub">Small, visible and reversible.</p>
+    <div class="how">
+      <div><b>A backup first</b><span>GeoGebra's original <code>main.js</code>, <code>preload.js</code> and pages are saved next to them, and Uninstall puts them back.</span></div>
+      <div><b>A few hooks</b><span>One line loads GeoSmart in the main process, a small bridge is added to the preload script, and each page loads the GeoSmart panel and KaTeX.</span></div>
+      <div><b>Calls go direct</b><span>Requests go from your computer straight to the Anthropic API with the official SDK. Nothing passes through a GeoSmart server.</span></div>
+      <div><b>On macOS</b><span>The app is re-signed ad-hoc, which also takes it out of the App Store sandbox, so GeoGebra's own settings start fresh once.</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>GeoSmart is unofficial and not affiliated with or endorsed by GeoGebra GmbH. GeoGebra® is a registered trademark of GeoGebra GmbH. GeoSmart contains no GeoGebra code; it patches your own installed copy, and GeoGebra's <a href="https://www.geogebra.org/license">license</a> still applies to it.</p>
+    <p>Code under the MIT license on <a href="https://github.com/Louistuis/geosmart">GitHub</a>. Claude is a product of Anthropic. Made by <a href="https://lou15.com">Louis Nordbø</a>.</p>
+  </footer>
+</div>
+</body>
+</html>
