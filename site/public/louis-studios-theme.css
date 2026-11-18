@@ -1,0 +1,47 @@
+/* Louis Studios design direction (v2) dir_MHrG5Mz_tdil: calm + technical, light. Light theme only on this site. */
+:root {
+  --ls-bg: #f7f7f9;
+  --ls-surface: #fdfdfe;
+  --ls-raised: #f1f0f3;
+  --ls-line: #dfdfe4;
+  --ls-ink: #1a1825;
+  --ls-muted: #5f5d6b;
+  --ls-accent: #6557d2;
+  --ls-accent-2: #5145a8;
+  --ls-accent-3: #f3f0ff;
+  --ls-on-accent: #fafafc;
+  color-scheme: light;
+  --ls-font-display: "SF Pro Display", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", sans-serif;
+  --ls-font-text: "SF Pro Text", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", sans-serif;
+  --ls-font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --ls-display-weight: 600;
+  --ls-display-tracking: -0.04em;
+  --ls-text-xs: 12px;
+  --ls-text-sm: 14px;
+  --ls-text-base: 17px;
+  --ls-text-lg: 24px;
+  --ls-heading-sm: 35px;
+  --ls-heading-md: clamp(35px, 3.47vw, 50px);
+  --ls-heading-lg: clamp(44px, 5.9vw, 85px);
+  --ls-leading-tight: 1.06;
+  --ls-leading-body: 1.65;
+  --ls-gutter: 32px;
+  --ls-section: clamp(84px, 10.56vw, 152px);
+  --ls-max-width: 1150px;
+  --ls-radius: 12px;
+  --ls-radius-sm: 6px;
+  --ls-radius-lg: 19px;
+  --ls-radius-control: 8px;
+  --ls-ease: cubic-bezier(.22, 1, .36, 1);
+  --ls-duration: 600ms;
+  --ls-duration-fast: 270ms;
+  --ls-stagger: 72ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --ls-duration: 1ms; --ls-duration-fast: 1ms; --ls-stagger: 0ms; }
+}
+html { background-color: var(--ls-surface); color: var(--ls-ink); }
+body { margin: 0; font-family: var(--ls-font-text); font-size: var(--ls-text-base); line-height: var(--ls-leading-body); -webkit-font-smoothing: antialiased; }
+:where(h1, h2, h3) { font-family: var(--ls-font-display); font-weight: var(--ls-display-weight); letter-spacing: var(--ls-display-tracking); line-height: var(--ls-leading-tight); }
+::selection { background: var(--ls-accent); color: var(--ls-on-accent); }
+:focus-visible { outline: 2px solid var(--ls-accent); outline-offset: 2px; }
