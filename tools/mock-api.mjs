@@ -4,6 +4,7 @@ import http from 'http';
 import fs from 'fs';
 const PORT = +process.argv[2] || 8787;
 const LOG = process.argv[3] || '/dev/null';
+const DEMO = process.argv[4] === 'demo';
 
 function sse(res, events) {
     res.writeHead(200, { 'content-type': 'text/event-stream', 'cache-control': 'no-cache' });
@@ -39,6 +40,24 @@ http.createServer((req, res) => {
         const results = Array.isArray(last.content) ? last.content.filter((b) => b.type === 'tool_result') : [];
         const turn = j.messages.filter((m) => m.role === 'assistant').length; // assistants so far in this conversation
         const evs = [msgStart(j.model)];
+        if (DEMO) {
+            if (results.length === 0) {
+                evs.push({ type: 'content_block_start', index: 0, content_block: { type: 'thinking', thinking: '', signature: '' } },
+                    { type: 'content_block_delta', index: 0, delta: { type: 'thinking_delta', thinking: 'Find f\'(x), solve f\'(x)=0, classify with f\'\'(x), then mark the points.' } },
+                    { type: 'content_block_delta', index: 0, delta: { type: 'signature_delta', signature: 'sig' } },
+                    { type: 'content_block_stop', index: 0 });
+                evs.push(...toolBlock(1, 'toolu_d1', 'cas', { expression: "Solve(Derivative(x^3-3x)=0)" }));
+                evs.push(...toolBlock(2, 'toolu_d2', 'run_commands', { commands: ['Max=Extremum(f,-2,0)', 'Min=Extremum(f,0,2)', 'R=Root(f)', 'SetColor(Max,"#E53935")', 'SetColor(Min,"#1E88E5")'] }));
+                evs.push(...end('tool_use', 90));
+            } else if (results[0].tool_use_id === 'toolu_d1') {
+                evs.push(...toolBlock(0, 'toolu_d3', 'look', {}));
+                evs.push(...end('tool_use', 20));
+            } else {
+                evs.push(...textBlock(0, "Here is the shape of $f(x) = x^3 - 3x$:\n\n**Turning points.** $f'(x) = 3x^2 - 3 = 0$ gives $x = \\pm 1$.\n\n- Local maximum at $(-1, 2)$, marked **Max** in red\n- Local minimum at $(1, -2)$, marked **Min** in blue\n\n**Zeros.** $x(x^2-3)=0$, so $x = 0$ and $x = \\pm\\sqrt{3} \\approx \\pm 1.73$.\n\n$$f''(x) = 6x \\quad\\Rightarrow\\quad f''(-1) < 0,\\; f''(1) > 0$$\n\nThe graph is symmetric about the origin, because $f(-x) = -f(x)$."));
+                evs.push(...end('end_turn', 160));
+            }
+            return sse(res, evs);
+        }
         if (results.length === 0) {
             evs.push({ type: 'content_block_start', index: 0, content_block: { type: 'thinking', thinking: '', signature: '' } },
                 { type: 'content_block_delta', index: 0, delta: { type: 'thinking_delta', thinking: 'The user wants a line; I will define g and check it.' } },

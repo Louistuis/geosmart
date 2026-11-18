@@ -209,14 +209,22 @@
             const results = [];
             let okCount = 0;
             for (const cmd of commands) {
-                let labels = null;
-                try { labels = g.evalCommandGetLabels(cmd); } catch (e) { labels = null; }
-                if (labels === null || labels === undefined) {
-                    results.push({ command: cmd, ok: false, error: 'GeoGebra rejected this command (unknown command name, wrong arguments or syntax error). Check the English command syntax.' });
+                // evalCommand returns true only for commands that define objects;
+                // scripting commands (SetColor, ZoomIn, Delete...) return false even
+                // when they work. So success = true OR the construction XML changed.
+                const before = new Set(g.getAllObjectNames());
+                const xml0 = g.getXML();
+                let ok = false;
+                try { ok = g.evalCommand(cmd) === true; } catch (e) { ok = false; }
+                if (!ok) { try { ok = g.getXML() !== xml0; } catch (e) { /* ignore */ } }
+                if (!ok) {
+                    results.push({ command: cmd, ok: false, error: 'No effect: GeoGebra rejected this command (unknown name, wrong arguments or syntax error) or it changed nothing. Check the English command syntax.' });
                 } else {
                     okCount++;
-                    const made = String(labels).split(',').filter(Boolean);
-                    results.push({ command: cmd, ok: true, created: made, values: made.slice(0, 6).map((n) => { try { return g.getValueString(n); } catch (e) { return n; } }) });
+                    const made = g.getAllObjectNames().filter((n) => !before.has(n));
+                    const r = { command: cmd, ok: true };
+                    if (made.length) { r.created = made; r.values = made.slice(0, 6).map((n) => { try { return g.getValueString(n); } catch (e) { return n; } }); }
+                    results.push(r);
                 }
             }
             const failed = results.length - okCount;
@@ -225,7 +233,7 @@
                 edited: okCount > 0,
                 result: results,
                 error: okCount === 0 ? JSON.stringify(results) : undefined,
-                summary: failed ? `${failed} of ${commands.length} failed: ` + results.filter((r) => !r.ok).map((r) => r.command).join('   ') : commands.join('   '),
+                summary: failed ? `${failed} of ${commands.length} had no effect: ` + results.filter((r) => !r.ok).map((r) => r.command).join('   ') : commands.join('   '),
                 partial: failed > 0,
                 commands,
             };
