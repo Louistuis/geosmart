@@ -1,7 +1,13 @@
 {
-  // Static site for geosmart.lou15.com. Deploy: cd site && npx wrangler@4 deploy
+  // GeoSmart site + setup script. Deploy: cd site && npx wrangler@4 deploy
+  // geosmart.lou15.com stays attached and redirects to gs.lou15.com.
   "name": "geosmart-site",
+  "main": "worker.js",
   "compatibility_date": "2026-10-01",
-  "assets": { "directory": "./public", "not_found_handling": "404-page" },
-  "routes": [{ "pattern": "geosmart.lou15.com", "custom_domain": true }]
+  "rules": [{ "type": "Text", "globs": ["**/*.sh", "**/*.ps1"], "fallthrough": true }],
+  "assets": { "directory": "./public", "binding": "ASSETS", "not_found_handling": "404-page", "run_worker_first": true },
+  "routes": [
+    { "pattern": "gs.lou15.com", "custom_domain": true },
+    { "pattern": "geosmart.lou15.com", "custom_domain": true }
+  ]
 }

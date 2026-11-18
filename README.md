@@ -2,7 +2,7 @@
 
 **Claude AI inside GeoGebra Classic 6, on macOS and Windows.** Right-click anything in your construction and ask Claude to explain it, analyse it, or draw something new. GeoSmart is a small patch for the GeoGebra Classic 6 you already have installed. GeoGebra itself looks and works exactly as before.
 
-Website: [geosmart.lou15.com](https://geosmart.lou15.com)
+Website: [gs.lou15.com](https://gs.lou15.com)
 
 > Unofficial. Not affiliated with or endorsed by GeoGebra GmbH. GeoGebra® is a registered trademark of GeoGebra GmbH. This repository contains no GeoGebra code; it patches your own installed copy, and GeoGebra's [license](https://www.geogebra.org/license) (non-commercial use) still applies to it.
 
@@ -18,6 +18,18 @@ Website: [geosmart.lou15.com](https://geosmart.lou15.com)
 ## Install
 
 You need GeoGebra Classic 6 and an [Anthropic API key](https://console.anthropic.com/settings/keys).
+
+**One command** (downloads the latest release and runs the patcher; read [install.sh](https://gs.lou15.com/install.sh) or [install.ps1](https://gs.lou15.com/install.ps1) first if you like):
+
+```bash
+curl -fsSL https://gs.lou15.com | bash        # macOS, in Terminal
+```
+
+```powershell
+irm https://gs.lou15.com | iex                 # Windows, in PowerShell
+```
+
+Uninstall: the same with `https://gs.lou15.com/uninstall`. Or install by hand from the zips:
 
 ### macOS
 
@@ -52,6 +64,7 @@ You need GeoGebra Classic 6 and an [Anthropic API key](https://console.anthropic
 | `patcher/patch.js` | Cross-platform apply / restore / status. |
 | `patch.sh`, `patch.ps1` | macOS and Windows front ends. |
 | `release.sh` | Builds the two release zips with dependencies included. |
+| `site/` | gs.lou15.com: a Cloudflare Worker that serves the page to browsers and the setup script to `curl` and PowerShell. |
 
 The API call runs in the main process because GeoGebra's page blocks requests to anything but its own domains.
 
