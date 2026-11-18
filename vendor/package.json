@@ -1,5 +1,6 @@
 {
   "name": "geosmart-vendor",
+  "version": "1.0.0",
   "private": true,
   "description": "Runtime dependencies copied into GeoGebra by patch.sh",
   "license": "MIT",

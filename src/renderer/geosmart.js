@@ -42,6 +42,12 @@
     };
     const svgImg = (svg, color) => 'data:image/svg+xml;utf8,' + encodeURIComponent(svg.replace('<svg ', `<svg xmlns="http://www.w3.org/2000/svg" style="color:${color}" `));
 
+    // ---------- platform ----------
+    const IS_MAC = /Mac/i.test(navigator.platform || navigator.userAgent);
+    const MOD = IS_MAC ? '⌘' : 'Ctrl+';
+    const SHIFT_MOD = IS_MAC ? '⇧⌘' : 'Ctrl+Shift+';
+    const modKey = (e) => (IS_MAC ? e.metaKey : e.ctrlKey);
+
     // ---------- language ----------
     const LANG = (new URLSearchParams(location.search).get('lang') || navigator.language || 'en').replace('_', '-');
     const NB = /^(nb|nn|no)\b/i.test(LANG);
@@ -340,9 +346,9 @@
                 h('span', { class: 'gs-title' }, 'AI'),
                 ui.modelChip,
                 h('div', { class: 'gs-head-actions' },
-                    h('button', { class: 'gs-icon-btn', title: 'New chat (⇧⌘K)', html: ICON.plus, onclick: newChat }),
-                    h('button', { class: 'gs-icon-btn', title: 'Settings (⌘,)', html: ICON.gear, onclick: () => openSettings() }),
-                    h('button', { class: 'gs-icon-btn', title: 'Close (⌘J)', html: ICON.close, onclick: () => togglePanel(false) }))),
+                    h('button', { class: 'gs-icon-btn', title: `New chat (${SHIFT_MOD}K)`, html: ICON.plus, onclick: newChat }),
+                    h('button', { class: 'gs-icon-btn', title: `Settings (${MOD},)`, html: ICON.gear, onclick: () => openSettings() }),
+                    h('button', { class: 'gs-icon-btn', title: `Close (${MOD}J)`, html: ICON.close, onclick: () => togglePanel(false) }))),
             ui.thread,
             h('footer', { class: 'gs-composer' }, ui.ctxChip, h('div', { class: 'gs-input-row' }, ui.input, ui.sendBtn)));
 
@@ -429,7 +435,7 @@
     function setBusy(b) {
         ui.panel.classList.toggle('busy', b);
         ui.sendBtn.innerHTML = b ? ICON.stop : ICON.send;
-        ui.sendBtn.title = b ? 'Stop (⌘.)' : 'Send (Enter)';
+        ui.sendBtn.title = b ? `Stop (${MOD}.)` : 'Send (Enter)';
     }
 
     // ---------- conversation rendering ----------
@@ -599,9 +605,9 @@
     async function openSettings() {
         await refreshSettings();
         const s = settings;
-        const keyInput = h('input', { class: 'gs-field', type: 'password', placeholder: s.hasKey ? `Saved in Keychain (${s.keyHint}). Paste a new key to replace it.` : 'sk-ant-…', autocomplete: 'off', spellcheck: 'false' });
+        const keyInput = h('input', { class: 'gs-field', type: 'password', placeholder: s.hasKey ? `Saved (${s.keyHint}). Paste a new key to replace it.` : 'sk-ant-…', autocomplete: 'off', spellcheck: 'false' });
         ['keydown', 'keyup', 'keypress'].forEach((t) => keyInput.addEventListener(t, (e) => { e.stopPropagation(); if (t === 'keydown' && e.key === 'Enter') saveKey(); }));
-        const keyStatus = h('div', { class: 'gs-key-status' + (s.hasKey ? ' ok' : '') }, s.hasKey ? `Key saved in your macOS Keychain (${s.keyHint}).` : 'No key yet. The AI uses your own Anthropic API key.');
+        const keyStatus = h('div', { class: 'gs-key-status' + (s.hasKey ? ' ok' : '') }, s.hasKey ? `Key saved in ${s.keyStore} (${s.keyHint}).` : 'No key yet. The AI uses your own Anthropic API key.');
         async function saveKey() {
             const k = keyInput.value.trim();
             keyStatus.className = 'gs-key-status';
@@ -617,8 +623,8 @@
             try {
                 const r = await host.setKey(k);
                 keyInput.value = '';
-                keyInput.placeholder = `Saved in Keychain (${r.keyHint}). Paste a new key to replace it.`;
-                keyStatus.textContent = t.message + ' Saved to your Keychain.';
+                keyInput.placeholder = `Saved (${r.keyHint}). Paste a new key to replace it.`;
+                keyStatus.textContent = t.message + ' Saved.';
                 keyStatus.className = 'gs-key-status ok';
                 refreshSettings();
             } catch (e) { keyStatus.textContent = String(e.message || e); keyStatus.className = 'gs-key-status bad'; }
@@ -656,7 +662,7 @@
                 h('h3', {}, 'Claude API key'),
                 h('div', { class: 'gs-key-row' }, keyInput, h('button', { class: 'gs-btn primary', onclick: saveKey }, s.hasKey ? 'Test / Save' : 'Save')),
                 keyStatus,
-                h('div', { class: 'gs-help' }, 'Get a key at ', h('a', { href: '#', onclick: (e) => { e.preventDefault(); host.openExternal('https://console.anthropic.com/settings/keys'); } }, 'console.anthropic.com'), '. It is stored in the macOS Keychain and only sent to Anthropic.'),
+                h('div', { class: 'gs-help' }, 'Get a key at ', h('a', { href: '#', onclick: (e) => { e.preventDefault(); host.openExternal('https://console.anthropic.com/settings/keys'); } }, 'console.anthropic.com'), `. It is stored in ${s.keyStore} and only sent to Anthropic.`),
                 s.hasKey ? h('button', { class: 'gs-link danger', onclick: async () => { await host.clearKey(); closeSettings(); openSettings(); } }, 'Remove saved key') : null),
             h('section', {},
                 h('h3', {}, 'Model'),
@@ -817,11 +823,17 @@
     }, true);
 
     // ---------- keyboard + menu bar ----------
+    // On macOS the menu bar owns these shortcuts too; on Windows there is no
+    // menu bar, so the page handles Ctrl+K / J / , / . / Shift+K itself.
     document.addEventListener('keydown', (e) => {
-        if (!e.metaKey) return;
-        if (e.key === 'k' && !e.shiftKey) { e.preventDefault(); e.stopPropagation(); openQuick(null); }
-        else if (e.key === 'j') { e.preventDefault(); e.stopPropagation(); togglePanel(); }
-        else if (e.key === '.') { if (currentRun) { e.preventDefault(); host.stop(); } }
+        if (!modKey(e) || e.altKey) return;
+        const k = e.key.toLowerCase();
+        const take = () => { e.preventDefault(); e.stopPropagation(); };
+        if (k === 'k' && !e.shiftKey) { take(); openQuick(null); }
+        else if (k === 'k' && e.shiftKey && !IS_MAC) { take(); newChat(); }
+        else if (k === 'j') { take(); togglePanel(); }
+        else if (k === ',' && !IS_MAC) { take(); openSettings(); }
+        else if (k === '.') { if (currentRun) { take(); host.stop(); } }
     }, true);
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {

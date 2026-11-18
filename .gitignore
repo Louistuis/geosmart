@@ -1,4 +1,6 @@
 build/
+build-win/
+dist/
 shots/
 vendor/node_modules/
 node_modules/

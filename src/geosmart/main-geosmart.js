@@ -3,7 +3,7 @@
 // and the Claude agent loop. Tools run in the renderer against ggbApplet.
 'use strict';
 
-const { app, ipcMain, Menu, shell, BrowserWindow } = require('electron');
+const { app, ipcMain, Menu, shell, BrowserWindow, safeStorage } = require('electron');
 const { execFile, spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
@@ -79,10 +79,26 @@ function keychainDelete() {
         execFile('/usr/bin/security', ['delete-generic-password', '-s', KC_SERVICE, '-a', KC_ACCOUNT], () => resolve());
     });
 }
+// Windows (and anything not macOS): Electron safeStorage, which uses DPAPI on
+// Windows, tied to the signed-in user. The encrypted blob lives in settings.
+const useKeychain = process.platform === 'darwin' && !process.env.GEOSMART_FORCE_SAFESTORAGE;
+function safeRead() {
+    const blob = settingsStore().get('apiKeyEnc');
+    if (!blob || !safeStorage.isEncryptionAvailable()) return null;
+    try { return safeStorage.decryptString(Buffer.from(blob, 'base64')); } catch (e) { return null; }
+}
+function safeWrite(key) {
+    if (!KEY_RE.test(key)) throw new Error('That does not look like an Anthropic API key.');
+    if (!safeStorage.isEncryptionAvailable()) throw new Error('Secure storage is not available on this system.');
+    settingsStore().set('apiKeyEnc', safeStorage.encryptString(key).toString('base64'));
+}
+const storeKey = (key) => useKeychain ? keychainWrite(key) : Promise.resolve().then(() => safeWrite(key));
+const deleteKey = () => useKeychain ? keychainDelete() : Promise.resolve(settingsStore().delete('apiKeyEnc'));
+
 async function getKey() {
     if (process.env.GEOSMART_TEST_KEY) return process.env.GEOSMART_TEST_KEY;
     if (cachedKey) return cachedKey;
-    cachedKey = await keychainRead();
+    cachedKey = useKeychain ? await keychainRead() : safeRead();
     return cachedKey;
 }
 
@@ -223,7 +239,7 @@ async function runToolInRenderer(wc, name, input) {
 }
 
 function friendlyError(Anthropic, e) {
-    if (e instanceof Anthropic.AuthenticationError) return 'Your Claude API key was rejected. Open AI Settings (⌘,) and paste a valid key.';
+    if (e instanceof Anthropic.AuthenticationError) return 'Your Claude API key was rejected. Open AI Settings and paste a valid key.';
     if (e instanceof Anthropic.PermissionDeniedError) return 'This API key is not allowed to use that model.';
     if (e instanceof Anthropic.RateLimitError) return 'Rate limited by the Claude API. Wait a moment and try again.';
     if (e instanceof Anthropic.BadRequestError) return 'The Claude API rejected the request: ' + (e.message || 'bad request');
@@ -364,16 +380,17 @@ function wireIpc() {
             models: Object.fromEntries(Object.entries(MODELS).map(([k, v]) => [k, v.label])),
             efforts: EFFORTS,
             version: app.getVersion(),
+            keyStore: useKeychain ? 'macOS Keychain' : (process.platform === 'win32' ? 'Windows (encrypted for your user account)' : 'encrypted local storage'),
         });
     });
     ipcMain.handle('geosmart:setSettings', (_e, partial) => setSettings(partial));
     ipcMain.handle('geosmart:setKey', async (_e, key) => {
         key = String(key || '').trim();
-        await keychainWrite(key);
+        await storeKey(key);
         cachedKey = key;
         return { ok: true, keyHint: '…' + key.slice(-4) };
     });
-    ipcMain.handle('geosmart:clearKey', async () => { await keychainDelete(); cachedKey = null; return { ok: true }; });
+    ipcMain.handle('geosmart:clearKey', async () => { await deleteKey(); cachedKey = null; return { ok: true }; });
     ipcMain.handle('geosmart:testKey', async (_e, candidate) => {
         const key = String(candidate || '').trim() || await getKey();
         if (!key) return { ok: false, message: 'No key saved yet.' };
