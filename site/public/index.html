@@ -8,154 +8,165 @@
 <meta property="og:title" content="GeoSmart">
 <meta property="og:description" content="Claude inside GeoGebra Classic 6. Set up with one command on macOS and Windows.">
 <meta property="og:image" content="https://gs.lou15.com/menu-zoom.webp">
-<meta name="theme-color" content="#fdfdfe">
+<meta name="theme-color" content="#f7f7f9">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/louis-studios-theme.css">
+<link rel="stylesheet" href="/louis-studios-site.css">
 <style>
-* { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-body { background: var(--ls-surface); color: var(--ls-ink); letter-spacing: -0.015em; overflow-x: hidden; }
-a { color: var(--ls-accent); text-decoration: none; }
-a:hover { text-decoration: underline; text-underline-offset: 3px; }
-.wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
-.wide { max-width: var(--ls-max-width); margin: 0 auto; padding: 0 16px; }
+/* Blocks composed by the Louis Studios designer (direction dir_MHrG5Mz_tdil, page pg_1aqmew0). */
 
-/* Navigation */
-.nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--ls-surface) 92%, transparent); backdrop-filter: saturate(1.8) blur(20px); -webkit-backdrop-filter: saturate(1.8) blur(20px); border-bottom: 1px solid var(--ls-line); }
-.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 52px; }
-.mark { display: flex; align-items: center; gap: 9px; color: var(--ls-ink); font: var(--ls-display-weight) 17px/1 var(--ls-font-display); letter-spacing: -0.02em; }
-.mark:hover { text-decoration: none; }
-.mark img { width: 24px; height: 24px; }
-.links { display: flex; align-items: center; gap: 26px; font-size: 13px; letter-spacing: -0.01em; }
-.links a { color: var(--ls-ink); opacity: 0.8; transition: opacity var(--ls-duration-fast) var(--ls-ease); }
-.links a:hover { opacity: 1; text-decoration: none; }
-.links .pill { opacity: 1; color: var(--ls-on-accent); background: var(--ls-accent); padding: 7px 15px; border-radius: 980px; font-weight: 500; }
-.links .pill:hover { background: var(--ls-accent-2); }
+/* Nav: float */
+.lsb-nav { position: sticky; top: 12px; z-index: 40; padding: 12px var(--lss-gutter) 0; }
+.lsb-nav .lsb-bar { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 28px; justify-content: space-between; padding: 8px 8px 8px 18px; border-radius: var(--lss-r-lg);
+  background: color-mix(in srgb, var(--ls-surface) 86%, transparent); backdrop-filter: blur(14px) saturate(1.3); -webkit-backdrop-filter: blur(14px) saturate(1.3); border: 1px solid var(--ls-line); box-shadow: var(--lss-shadow); }
+.lsb-nav .lsb-brand { display: flex; align-items: center; gap: 10px; font-family: var(--ls-font-display); font-weight: var(--ls-display-weight); font-size: 19px; letter-spacing: -0.02em; text-decoration: none; white-space: nowrap; }
+.lsb-nav .lsb-brand img { width: 26px; height: 26px; }
+.lsb-nav .lsb-links { display: flex; gap: clamp(18px, 2.4vw, 36px); margin: 0 auto; padding: 0; list-style: none; }
+.lsb-nav .lsb-links a { color: var(--ls-muted); text-decoration: none; font-size: 15px; transition: color var(--ls-duration-fast) var(--ls-ease); }
+.lsb-nav .lsb-links a:hover { color: var(--ls-ink); }
+.lsb-nav .lsb-cta { min-height: 40px; padding: 0 18px; font-size: 15px; }
+@media (max-width: 700px) { .lsb-nav .lsb-links { display: none; } }
 
-/* Hero */
-.hero { text-align: center; padding: 84px 0 var(--ls-section); }
-.name { font: var(--ls-display-weight) 21px/1.2 var(--ls-font-display); color: var(--ls-accent); margin: 0 0 10px; letter-spacing: -0.015em; }
-h1 { font-size: var(--ls-heading-lg); margin: 0; }
-.lede { font: 400 clamp(19px, 2.2vw, var(--ls-text-lg))/1.42 var(--ls-font-display); color: var(--ls-muted); letter-spacing: -0.02em; max-width: 30em; margin: 20px auto 0; }
-.actions { display: flex; align-items: center; justify-content: center; gap: 28px; margin-top: 32px; flex-wrap: wrap; }
-.button { display: inline-flex; align-items: center; height: 46px; padding: 0 24px; border-radius: 980px; background: var(--ls-accent); color: var(--ls-on-accent); font: 400 var(--ls-text-base)/1 var(--ls-font-text); transition: background var(--ls-duration-fast) var(--ls-ease); }
-.button:hover { background: var(--ls-accent-2); text-decoration: none; }
-.more { font-size: var(--ls-text-base); }
-.more::after { content: " \203A"; }
+/* Hero: frame, with the real GeoGebra screenshot */
+.lsb-hero { padding-block: clamp(56px, 8vw, 120px) var(--lss-section); }
+.lsb-hero .lsb-copy { display: grid; justify-items: center; gap: 24px; text-align: center; }
+.lsb-hero .lss-h1 { max-width: 12em; }
+.lsb-hero .lsb-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 22px; }
+.lsb-hero .lsb-frame { margin-top: clamp(44px, 6vw, 88px); padding: clamp(8px, 1.2vw, 14px); border: 1px solid var(--ls-line); border-radius: var(--lss-r-lg); background: var(--ls-surface); }
+.lsb-hero .lsb-art { border-radius: var(--lss-r); overflow: hidden; border: 1px solid var(--ls-line); }
+.lsb-hero .lsb-cap { margin: 16px 0 0; text-align: center; color: var(--ls-muted); font-size: 14px; }
+@keyframes lsb-rise { from { opacity: .001; transform: translateY(.4em); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+.lsb-rise { animation: lsb-rise calc(var(--ls-duration) * 1.6) var(--ls-ease) both; }
+.lsb-d1 { animation-delay: calc(var(--ls-duration) * .25); }
+.lsb-d2 { animation-delay: calc(var(--ls-duration) * .45); }
+.lsb-d3 { animation-delay: calc(var(--ls-duration) * .7); }
 
-.frame { margin: 64px auto 0; max-width: 980px; border-radius: var(--ls-radius); overflow: hidden; border: 1px solid var(--ls-line); background: var(--ls-surface); }
-.frame img { display: block; width: 100%; height: auto; }
-.note { text-align: center; color: var(--ls-muted); font-size: var(--ls-text-sm); margin: 18px auto 0; max-width: 40em; letter-spacing: -0.01em; }
-
-/* Sections */
-section { padding: var(--ls-section) 0; }
-.mist { background: var(--ls-bg); border-top: 1px solid var(--ls-line); border-bottom: 1px solid var(--ls-line); }
-.eyebrow { font: 600 var(--ls-text-base)/1.2 var(--ls-font-text); color: var(--ls-accent); margin: 0 0 10px; letter-spacing: -0.01em; }
-h2 { font-size: var(--ls-heading-md); margin: 0; }
-.intro { font: 400 clamp(19px, 2vw, 21px)/1.5 var(--ls-font-display); color: var(--ls-muted); letter-spacing: -0.015em; margin: 16px 0 0; max-width: 34em; }
-.center { text-align: center; }
-.center .intro { margin-left: auto; margin-right: auto; }
+/* Shared section head */
+.lsb-head { display: grid; gap: 14px; justify-items: center; text-align: center; margin-bottom: clamp(36px, 5vw, 64px); }
+.lsb-head .lss-h2 { max-width: 16em; }
 
 /* Setup */
-.seg { display: inline-flex; padding: 3px; border-radius: 10px; background: var(--ls-raised); border: 1px solid var(--ls-line); margin-top: 44px; }
-.seg button { appearance: none; border: 1px solid transparent; background: none; height: 32px; padding: 0 28px; border-radius: 7px; font: 500 var(--ls-text-sm)/1 var(--ls-font-text); color: var(--ls-muted); cursor: pointer; letter-spacing: -0.01em; transition: color var(--ls-duration-fast) var(--ls-ease), background var(--ls-duration-fast) var(--ls-ease); }
+.lsb-setup { background: var(--ls-surface); border-block: 1px solid var(--ls-line); }
+.seg { display: inline-flex; padding: 3px; border-radius: 10px; background: var(--ls-raised); border: 1px solid var(--ls-line); }
+.seg button { appearance: none; border: 1px solid transparent; background: none; height: 34px; padding: 0 28px; border-radius: 7px; font: 500 14px/1 var(--ls-font-text); color: var(--ls-muted); cursor: pointer; transition: color var(--ls-duration-fast) var(--ls-ease); }
 .seg button[aria-selected="true"] { background: var(--ls-surface); border-color: var(--ls-line); color: var(--ls-ink); }
-.card { max-width: 720px; margin: 22px auto 0; background: var(--ls-surface); border: 1px solid var(--ls-line); border-radius: var(--ls-radius-lg); padding: 32px 32px 28px; text-align: left; }
+.lsb-seg-row { display: flex; justify-content: center; margin-bottom: 22px; }
+.card { max-width: 760px; margin: 0 auto; background: var(--ls-bg); border: 1px solid var(--ls-line); border-radius: var(--lss-r-lg); padding: 30px 32px 26px; }
 .card[hidden] { display: none; }
-.label { font: 600 var(--ls-text-xs)/1 var(--ls-font-text); color: var(--ls-muted); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 12px; }
-.cmd { display: flex; align-items: center; gap: 12px; border: 1px solid var(--ls-line); border-radius: var(--ls-radius-control); padding: 0 6px 0 16px; min-height: 54px; background: var(--ls-bg); }
-.cmd code { flex: 1; min-width: 0; font: 15.5px/1.4 var(--ls-font-mono); letter-spacing: 0; color: var(--ls-ink); white-space: nowrap; overflow-x: auto; scrollbar-width: none; padding: 14px 0; }
+.label { font: 600 12px/1 var(--ls-font-text); color: var(--ls-muted); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 12px; }
+.cmd { display: flex; align-items: center; gap: 12px; border: 1px solid var(--ls-line); border-radius: var(--lss-r-control); padding: 0 6px 0 16px; min-height: 56px; background: var(--ls-surface); }
+.cmd code { flex: 1; min-width: 0; font: 15.5px/1.4 var(--ls-font-mono); color: var(--ls-ink); white-space: nowrap; overflow-x: auto; scrollbar-width: none; padding: 14px 0; }
 .cmd code::-webkit-scrollbar { display: none; }
-.copy { appearance: none; flex: none; height: 38px; padding: 0 16px; border: 0; border-radius: var(--ls-radius-sm); background: var(--ls-accent); color: var(--ls-on-accent); font: 600 var(--ls-text-sm)/1 var(--ls-font-text); cursor: pointer; min-width: 78px; transition: background var(--ls-duration-fast) var(--ls-ease); }
+.copy { appearance: none; flex: none; height: 42px; padding: 0 18px; border: 0; border-radius: var(--lss-r-sm); background: var(--ls-accent); color: var(--ls-on-accent); font: 600 14px/1 var(--ls-font-text); cursor: pointer; min-width: 80px; transition: background var(--ls-duration-fast) var(--ls-ease); }
 .copy:hover { background: var(--ls-accent-2); }
-ol.steps { margin: 26px 0 0; padding: 0; list-style: none; counter-reset: s; }
-ol.steps li { counter-increment: s; position: relative; padding: 15px 0 15px 34px; border-top: 1px solid var(--ls-line); font-size: 16px; line-height: 1.5; }
-ol.steps li::before { content: counter(s); position: absolute; left: 0; top: 15px; font: 600 16px/1.5 var(--ls-font-mono); color: var(--ls-accent); }
+ol.steps { margin: 24px 0 0; padding: 0; list-style: none; counter-reset: s; }
+ol.steps li { counter-increment: s; position: relative; padding: 15px 0 15px 36px; border-top: 1px solid var(--ls-line); font-size: 16px; line-height: 1.5; }
+ol.steps li::before { content: counter(s); position: absolute; left: 0; top: 15px; font: 600 15px/1.6 var(--ls-font-mono); color: var(--ls-accent); }
 .steps .sub { color: var(--ls-muted); }
-kbd { font: 500 0.88em/1 var(--ls-font-text); padding: 3px 8px 4px; border-radius: var(--ls-radius-sm); border: 1px solid var(--ls-line); background: var(--ls-raised); color: var(--ls-ink); white-space: nowrap; }
-.aside { margin: 6px 0 0; padding-top: 16px; border-top: 1px solid var(--ls-line); color: var(--ls-muted); font-size: var(--ls-text-sm); line-height: 1.6; letter-spacing: -0.01em; }
-.aside code { font: 13px/1.4 var(--ls-font-mono); letter-spacing: 0; color: var(--ls-ink); overflow-wrap: anywhere; }
-.small { color: var(--ls-muted); font-size: var(--ls-text-sm); margin: 24px auto 0; letter-spacing: -0.01em; }
+.steps a, .aside a, .small a, .lss-text a { color: var(--ls-accent); text-decoration: none; }
+.steps a:hover, .aside a:hover, .small a:hover, .lss-text a:hover { text-decoration: underline; }
+kbd { font: 500 0.88em/1 var(--ls-font-text); padding: 3px 8px 4px; border-radius: var(--lss-r-sm); border: 1px solid var(--ls-line); background: var(--ls-raised); color: var(--ls-ink); white-space: nowrap; }
+.aside { margin: 4px 0 0; padding-top: 16px; border-top: 1px solid var(--ls-line); color: var(--ls-muted); font-size: 14px; line-height: 1.6; }
+.aside code { font: 13px/1.4 var(--ls-font-mono); color: var(--ls-ink); overflow-wrap: anywhere; }
+.small { color: var(--ls-muted); font-size: 14px; margin: 22px 0 0; text-align: center; }
 
-/* Features */
-.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 var(--ls-gutter); margin-top: 64px; }
-.feat { border-top: 1px solid var(--ls-line); padding: 24px 0 36px; }
-.feat h3 { font-size: 19px; letter-spacing: -0.02em; line-height: 1.3; margin: 0 0 8px; }
-.feat p { margin: 0; color: var(--ls-muted); font-size: 16px; line-height: 1.55; }
+/* In practice */
+.lsb-shot { border-radius: var(--lss-r-lg); border: 1px solid var(--ls-line); background: var(--ls-surface); padding: clamp(8px, 1.2vw, 14px); }
+.lsb-shot img { border-radius: var(--lss-r); border: 1px solid var(--ls-line); }
 
-/* Changes */
-.list { margin: 52px 0 0; padding: 0; list-style: none; max-width: 760px; }
-.list li { display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 22px 0; border-top: 1px solid var(--ls-line); font-size: 16px; line-height: 1.55; }
-.list li:last-child { border-bottom: 1px solid var(--ls-line); }
-.list b { font-weight: 600; }
-.list span { color: var(--ls-muted); }
-.list code { font: 14px/1.4 var(--ls-font-mono); letter-spacing: 0; color: var(--ls-ink); }
+/* Features: columns */
+.lsb-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: clamp(28px, 4vw, 56px); margin: 0; padding: 0; list-style: none; }
+.lsb-cols li { display: grid; align-content: start; gap: 12px; padding-top: 22px; border-top: 2px solid var(--ls-accent); text-align: center; justify-items: center; }
 
-footer { background: var(--ls-bg); border-top: 1px solid var(--ls-line); padding: 24px 0 30px; color: var(--ls-muted); font-size: var(--ls-text-xs); line-height: 1.65; letter-spacing: -0.005em; }
-footer p { margin: 0 0 8px; }
-footer a { color: var(--ls-ink); }
+/* FAQ: split */
+.lsb-faq { background: var(--ls-surface); border-block: 1px solid var(--ls-line); }
+.lsb-split { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 32px clamp(32px, 6vw, 96px); align-items: start; }
+.lsb-split .lsb-head { position: sticky; top: 104px; margin: 0; justify-items: start; text-align: left; }
+.lsb-qs { border-bottom: 1px solid var(--ls-line); }
+.lsb-qs details { border-top: 1px solid var(--ls-line); }
+.lsb-qs summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 0; cursor: pointer; list-style: none; }
+.lsb-qs summary::-webkit-details-marker { display: none; }
+.lsb-q { margin: 0; font: 500 clamp(17px, 1.5vw, 20px)/1.35 var(--ls-font-text); letter-spacing: -0.01em; }
+.lsb-plus { position: relative; flex: none; width: 14px; height: 14px; color: var(--ls-accent); }
+.lsb-plus::before, .lsb-plus::after { content: ""; position: absolute; left: 0; top: 6px; width: 14px; height: 1.5px; background: currentColor; transition: transform var(--ls-duration) var(--ls-ease); }
+.lsb-plus::after { transform: rotate(90deg); }
+.lsb-qs details[open] .lsb-plus::after { transform: rotate(0deg); }
+.lsb-qs details .lss-text { padding: 0 0 24px; }
+.lsb-qs code { font: 14px/1.4 var(--ls-font-mono); color: var(--ls-ink); overflow-wrap: anywhere; }
+@media (max-width: 860px) { .lsb-split { grid-template-columns: 1fr; } .lsb-split .lsb-head { position: static; } }
 
-/* Quiet entrance, off when reduced motion is set */
-@media (prefers-reduced-motion: no-preference) {
-  .rise { opacity: 0; transform: translateY(14px); transition: opacity var(--ls-duration) var(--ls-ease), transform var(--ls-duration) var(--ls-ease); }
-  .rise.in { opacity: 1; transform: none; }
-}
+/* CTA: panel, flat */
+.lsb-panel { display: grid; gap: 20px; justify-items: center; text-align: center; padding: clamp(44px, 7vw, 96px) clamp(24px, 6vw, 88px); border-radius: var(--lss-r-lg); background: var(--ls-accent-3); border: 1px solid color-mix(in srgb, var(--ls-accent) 18%, var(--ls-line)); }
+.lsb-panel .lsb-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 22px; }
 
-@media (max-width: 834px) {
-  .grid { grid-template-columns: 1fr 1fr; }
-  .list li { grid-template-columns: 1fr; gap: 4px; }
-}
+/* Footer: line */
+.lsb-footer { padding-block: 36px 40px; border-top: 1px solid var(--ls-line); background: var(--ls-surface); }
+.lsb-footer .lsb-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 40px; }
+.lsb-footer .lsb-brand { display: flex; align-items: center; gap: 9px; font-family: var(--ls-font-display); font-weight: var(--ls-display-weight); font-size: 18px; letter-spacing: -0.02em; text-decoration: none; }
+.lsb-footer .lsb-brand img { width: 22px; height: 22px; }
+.lsb-footer ul { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 0; padding: 0; list-style: none; }
+.lsb-footer ul a { color: var(--ls-muted); font-size: 15px; text-decoration: none; }
+.lsb-footer ul a:hover { color: var(--ls-ink); }
+.lsb-footer .lsb-legal { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--ls-line); color: var(--ls-muted); font-size: 13px; line-height: 1.6; }
+.lsb-footer .lsb-legal p { margin: 0 0 6px; max-width: 72em; }
+.lsb-footer .lsb-legal a { color: var(--ls-ink); }
+
 @media (max-width: 560px) {
-  .links a:not(.pill) { display: none; }
-  .hero { padding: 56px 0 84px; }
-  .frame { margin-top: 44px; border-radius: var(--ls-radius-control); }
-  .grid { grid-template-columns: 1fr; margin-top: 40px; }
-  .card { padding: 22px 18px 20px; border-radius: var(--ls-radius); }
+  .card { padding: 22px 18px 20px; border-radius: var(--lss-r); }
   .cmd { flex-wrap: wrap; padding: 12px; }
   .cmd code { white-space: normal; overflow-wrap: anywhere; font-size: 14px; padding: 2px 0; flex-basis: 100%; }
   .copy { width: 100%; }
+  .lsb-nav .lsb-bar { padding-left: 14px; }
 }
 </style>
 </head>
 <body>
-<header class="nav">
-  <div class="wrap">
-    <a class="mark" href="/"><img src="/icon.svg" alt="">GeoSmart</a>
-    <nav class="links" aria-label="Sections">
-      <a href="#features">Features</a>
-      <a href="https://github.com/Louistuis/geosmart">GitHub</a>
-      <a class="pill" href="#setup">Set up</a>
-    </nav>
-  </div>
+<a class="lss-skip" href="#main">Skip to content</a>
+<header class="lsb-nav">
+  <nav class="lsb-bar" aria-label="Main">
+    <a class="lsb-brand" href="/"><img src="/icon.svg" alt="">GeoSmart</a>
+    <ul class="lsb-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#in-practice">In practice</a></li>
+      <li><a href="#faq">Questions</a></li>
+      <li><a href="https://github.com/Louistuis/geosmart">GitHub</a></li>
+    </ul>
+    <a class="lss-btn lsb-cta" href="#setup">Set up</a>
+  </nav>
 </header>
 
-<main>
-  <div class="hero">
-    <div class="wrap">
-      <p class="name">GeoSmart</p>
-      <h1>Claude, inside GeoGebra.</h1>
-      <p class="lede">Right-click a function, a point or an empty spot in GeoGebra Classic 6. Claude explains it, analyses it or draws what you ask, in your own construction.</p>
-      <div class="actions">
-        <a class="button" href="#setup">Set up</a>
-        <a class="more" href="#features">Learn more</a>
+<main id="main">
+  <section class="lsb-hero" id="top" aria-labelledby="hero-title">
+    <div class="lss-wrap lsb-copy">
+      <p class="lss-meta lsb-rise">GeoSmart for GeoGebra Classic 6</p>
+      <h1 id="hero-title" class="lss-h1 lsb-rise">Claude, inside GeoGebra.</h1>
+      <p class="lss-lead lsb-rise lsb-d1">Right-click a function, a point or an empty spot in GeoGebra Classic 6. Claude explains it, analyses it or draws what you ask, in your own construction.</p>
+      <div class="lsb-actions lsb-rise lsb-d2">
+        <a class="lss-btn" href="#setup">Set up</a>
+        <a class="lss-quiet" href="#in-practice">See it work</a>
       </div>
     </div>
-    <div class="wide">
-      <figure class="frame rise" style="margin-bottom:0"><img src="/menu-zoom.webp" width="1800" height="1284" alt="GeoGebra Classic 6 with the right-click menu open on the function f. The last three items are Explain f with AI, Analyse f with AI and Ask AI."></figure>
-      <p class="note">GeoGebra's own right-click menu, with three items added at the bottom.</p>
+    <div class="lss-wrap">
+      <figure class="lsb-frame lsb-rise lsb-d3" style="margin-inline:0;margin-bottom:0">
+        <div class="lsb-art"><img src="/menu-zoom.webp" width="1800" height="1284" alt="GeoGebra Classic 6 with the right-click menu open on the function f. The last three items are Explain f with AI, Analyse f with AI and Ask AI."></div>
+      </figure>
+      <p class="lsb-cap">GeoGebra's own right-click menu, with three items added at the bottom.</p>
     </div>
-  </div>
+  </section>
 
-  <section class="mist center" id="setup">
-    <div class="wrap">
-      <p class="eyebrow">Set up</p>
-      <h2>One command. Done.</h2>
-      <p class="intro">Install GeoGebra Classic 6 first. The command downloads the latest GeoSmart, closes GeoGebra if it is open and adds Claude to it.</p>
-      <div class="seg" role="tablist" aria-label="Operating system">
-        <button role="tab" id="t-mac" aria-controls="p-mac" aria-selected="true">macOS</button>
-        <button role="tab" id="t-win" aria-controls="p-win" aria-selected="false" tabindex="-1">Windows</button>
+  <section class="lsb-setup lss-section" id="setup" aria-labelledby="setup-title">
+    <div class="lss-wrap">
+      <header class="lsb-head">
+        <p class="lss-meta">Set up</p>
+        <h2 id="setup-title" class="lss-h2">One command. Done.</h2>
+        <p class="lss-lead">Install GeoGebra Classic 6 first. The command downloads the latest GeoSmart, closes GeoGebra if it is open and adds Claude to it.</p>
+      </header>
+      <div class="lsb-seg-row">
+        <div class="seg" role="tablist" aria-label="Operating system">
+          <button role="tab" id="t-mac" aria-controls="p-mac" aria-selected="true">macOS</button>
+          <button role="tab" id="t-win" aria-controls="p-win" aria-selected="false" tabindex="-1">Windows</button>
+        </div>
       </div>
-
       <div class="card" id="p-mac" role="tabpanel" aria-labelledby="t-mac">
         <p class="label">Paste in Terminal</p>
         <div class="cmd"><code>curl -fsSL https://gs.lou15.com | bash</code><button class="copy" type="button">Copy</button></div>
@@ -166,7 +177,6 @@ footer a { color: var(--ls-ink); }
         </ol>
         <p class="aside">To remove GeoSmart: <code>curl -fsSL https://gs.lou15.com/uninstall | bash</code><br>Or download <a href="https://github.com/Louistuis/geosmart/releases/latest/download/GeoSmart-macOS.zip">GeoSmart-macOS.zip</a> and open Install GeoSmart.command.</p>
       </div>
-
       <div class="card" id="p-win" role="tabpanel" aria-labelledby="t-win" hidden>
         <p class="label">Paste in PowerShell</p>
         <div class="cmd"><code>irm https://gs.lou15.com | iex</code><button class="copy" type="button">Copy</button></div>
@@ -177,65 +187,93 @@ footer a { color: var(--ls-ink); }
         </ol>
         <p class="aside">To remove GeoSmart: <code>irm https://gs.lou15.com/uninstall | iex</code><br>Or download <a href="https://github.com/Louistuis/geosmart/releases/latest/download/GeoSmart-Windows.zip">GeoSmart-Windows.zip</a> and open Install GeoSmart.cmd.</p>
       </div>
-
       <p class="small">Read the scripts first: <a href="/install.sh">install.sh</a> and <a href="/install.ps1">install.ps1</a>. Run the command again after GeoGebra updates.</p>
     </div>
   </section>
 
-  <section class="center">
-    <div class="wrap">
-      <p class="eyebrow">In practice</p>
-      <h2>It works on your construction.</h2>
-      <p class="intro">Claude uses GeoGebra's own commands and CAS, then looks at the drawing to check its work. Every command it runs is listed, and one click undoes them all.</p>
-    </div>
-    <div class="wide">
-      <figure class="frame rise" style="margin-bottom:0"><img src="/panel.webp" width="2000" height="1122" loading="lazy" alt="GeoGebra with the AI panel open on the right. Claude solved f'(x)=0 with the CAS, marked the maximum in red and the minimum in blue, and explained the shape of x cubed minus 3x."></figure>
-      <p class="note">Analyse f: the turning points come from the CAS, the marks are ordinary GeoGebra objects.</p>
+  <section class="lss-section" id="in-practice" aria-labelledby="practice-title">
+    <div class="lss-wrap">
+      <header class="lsb-head">
+        <p class="lss-meta">In practice</p>
+        <h2 id="practice-title" class="lss-h2">It works on your construction.</h2>
+        <p class="lss-lead">Claude uses GeoGebra's own commands and CAS, then looks at the drawing to check its work. Every command it runs is listed, and one click undoes them all.</p>
+      </header>
+      <figure class="lsb-shot" style="margin:0"><img src="/panel.webp" width="2000" height="1122" loading="lazy" alt="GeoGebra with the AI panel open on the right. Claude solved f'(x)=0 with the CAS, marked the maximum in red and the minimum in blue, and explained the shape of x cubed minus 3x."></figure>
+      <p class="lsb-cap" style="margin:16px 0 0;text-align:center;color:var(--ls-muted);font-size:14px">Analyse f: the turning points come from the CAS, the marks are ordinary GeoGebra objects.</p>
     </div>
   </section>
 
-  <section class="mist" id="features">
-    <div class="wrap">
-      <p class="eyebrow">Features</p>
-      <h2>Quiet until you need it.</h2>
-      <p class="intro">GeoGebra looks and works exactly as before. Claude is one right-click or one shortcut away.</p>
-      <div class="grid rise">
-        <div class="feat"><h3>Right-click anything</h3><p>Explain, analyse or ask about any object, in the Graphics or the Algebra view. Right-click empty space to draw something new there.</p></div>
-        <div class="feat"><h3>Real GeoGebra commands</h3><p>Claude defines objects, checks maths with the CAS, styles and deletes objects and moves the view, all through GeoGebra itself.</p></div>
-        <div class="feat"><h3>Undo in one step</h3><p>Everything Claude changed in a reply is reverted with a single Undo.</p></div>
-        <div class="feat"><h3>Sonnet or Opus</h3><p>Choose Claude Sonnet 5.5 or Opus 5.5 and the effort, from low to max. Reasoning summaries and a read-only mode are in Settings.</p></div>
-        <div class="feat"><h3>Shortcuts</h3><p><kbd>⌘</kbd> <kbd>K</kbd> to ask, <kbd>⌘</kbd> <kbd>J</kbd> for the panel, <kbd>⌘</kbd> <kbd>,</kbd> for settings. Ctrl on Windows.</p></div>
-        <div class="feat"><h3>Your key, kept private</h3><p>Stored encrypted in the macOS Keychain or with Windows user encryption, and sent only to Anthropic. No account, no server in between.</p></div>
+  <section class="lss-section" id="features" aria-labelledby="features-title" style="padding-top:0">
+    <div class="lss-wrap">
+      <header class="lsb-head">
+        <p class="lss-meta">Features</p>
+        <h2 id="features-title" class="lss-h2">Quiet until you need it.</h2>
+      </header>
+      <ul class="lsb-cols">
+        <li><h3 class="lss-h3">Right-click anything</h3><p class="lss-text">Explain, analyse or ask about any object, in the Graphics or the Algebra view. Right-click empty space to draw something new there.</p></li>
+        <li><h3 class="lss-h3">Real GeoGebra commands</h3><p class="lss-text">Claude defines objects, checks maths with the CAS, styles and deletes objects and moves the view, all through GeoGebra itself.</p></li>
+        <li><h3 class="lss-h3">Undo in one step</h3><p class="lss-text">Everything Claude changed in a reply is reverted with a single Undo.</p></li>
+        <li><h3 class="lss-h3">Sonnet or Opus</h3><p class="lss-text">Choose Claude Sonnet 5.5 or Opus 5.5 and the effort, from low to max. Reasoning summaries and a read-only mode are in Settings.</p></li>
+        <li><h3 class="lss-h3">Shortcuts</h3><p class="lss-text"><kbd>⌘</kbd> <kbd>K</kbd> to ask, <kbd>⌘</kbd> <kbd>J</kbd> for the panel, <kbd>⌘</kbd> <kbd>,</kbd> for settings. Ctrl on Windows.</p></li>
+        <li><h3 class="lss-h3">Your key, kept private</h3><p class="lss-text">Stored encrypted in the macOS Keychain or with Windows user encryption, and sent only to Anthropic. No account, no server in between.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="lsb-faq lss-section" id="faq" aria-labelledby="faq-title">
+    <div class="lss-wrap">
+      <div class="lsb-split">
+        <header class="lsb-head">
+          <p class="lss-meta">Questions</p>
+          <h2 id="faq-title" class="lss-h2">Good to know.</h2>
+        </header>
+        <div class="lsb-qs">
+          <details><summary><h3 class="lsb-q">What does the setup change?</h3><span class="lsb-plus" aria-hidden="true"></span></summary><p class="lss-text">It saves GeoGebra's original <code>main.js</code>, <code>preload.js</code> and pages next to them, adds a few hooks that load GeoSmart, and on macOS re-signs the app ad hoc, which also takes it out of the App Store sandbox. Uninstalling puts the originals back.</p></details>
+          <details><summary><h3 class="lsb-q">How do I remove it?</h3><span class="lsb-plus" aria-hidden="true"></span></summary><p class="lss-text">Run the same command with /uninstall: <code>curl -fsSL https://gs.lou15.com/uninstall | bash</code> on Mac, <code>irm https://gs.lou15.com/uninstall | iex</code> on Windows.</p></details>
+          <details><summary><h3 class="lsb-q">Where do my requests go?</h3><span class="lsb-plus" aria-hidden="true"></span></summary><p class="lss-text">Straight from your computer to the Anthropic API through the official SDK. You pay Anthropic for what you use; there is no GeoSmart server.</p></details>
+          <details><summary><h3 class="lsb-q">Does it survive GeoGebra updates?</h3><span class="lsb-plus" aria-hidden="true"></span></summary><p class="lss-text">No. Updates replace the patched files, so run the command again after GeoGebra updates.</p></details>
+          <details><summary><h3 class="lsb-q">Is the source available?</h3><span class="lsb-plus" aria-hidden="true"></span></summary><p class="lss-text">Yes, under the MIT license on <a href="https://github.com/Louistuis/geosmart">GitHub</a>. It contains no GeoGebra code.</p></details>
+        </div>
       </div>
     </div>
   </section>
 
-  <section>
-    <div class="wrap">
-      <p class="eyebrow">Under the hood</p>
-      <h2>What the setup changes.</h2>
-      <p class="intro">Small, visible and reversible. The source is on <a href="https://github.com/Louistuis/geosmart">GitHub</a>.</p>
-      <ul class="list rise">
-        <li><b>A backup first</b><span>GeoGebra's original <code>main.js</code>, <code>preload.js</code> and pages are saved next to them. Uninstalling puts them back.</span></li>
-        <li><b>A few hooks</b><span>One line loads GeoSmart in the main process, a small bridge joins the preload script, and each page loads the panel and KaTeX.</span></li>
-        <li><b>Direct to Anthropic</b><span>Requests go from your computer to the Anthropic API through the official SDK.</span></li>
-        <li><b>On macOS</b><span>The app is re-signed ad hoc, which also takes it out of the App Store sandbox, so GeoGebra's own settings start fresh once.</span></li>
-      </ul>
+  <section class="lss-section" id="start" aria-labelledby="start-title">
+    <div class="lss-wrap">
+      <div class="lsb-panel">
+        <h2 id="start-title" class="lss-h2">Ready when you are.</h2>
+        <p class="lss-lead">Free and open source. Bring your own Anthropic API key.</p>
+        <div class="lsb-actions">
+          <a class="lss-btn" href="#setup">Set up</a>
+          <a class="lss-quiet" href="https://github.com/Louistuis/geosmart">View on GitHub</a>
+        </div>
+      </div>
     </div>
   </section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <p>GeoSmart is unofficial and not affiliated with or endorsed by GeoGebra GmbH. GeoGebra® is a registered trademark of GeoGebra GmbH. GeoSmart contains no GeoGebra code; it changes your own installed copy, and GeoGebra's <a href="https://www.geogebra.org/license">license</a> still applies to it. Claude is made by Anthropic.</p>
-    <p>MIT licensed. <a href="https://github.com/Louistuis/geosmart">Source on GitHub</a>. Made by <a href="https://lou15.com">Louis Nordbø</a>.</p>
+<footer class="lsb-footer">
+  <div class="lss-wrap">
+    <div class="lsb-row">
+      <a class="lsb-brand" href="/"><img src="/icon.svg" alt="">GeoSmart</a>
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="#setup">Set up</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#faq">Questions</a></li>
+          <li><a href="https://github.com/Louistuis/geosmart">GitHub</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="lsb-legal">
+      <p>GeoSmart is unofficial and not affiliated with or endorsed by GeoGebra GmbH. GeoGebra® is a registered trademark of GeoGebra GmbH. GeoSmart contains no GeoGebra code; it changes your own installed copy, and GeoGebra's <a href="https://www.geogebra.org/license">license</a> still applies to it. Claude is made by Anthropic.</p>
+      <p>MIT licensed. Made by <a href="https://lou15.com">Louis Nordbø</a>.</p>
+    </div>
   </div>
 </footer>
 
 <script>
 (() => {
-  const io = 'IntersectionObserver' in window ? new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' }) : null;
-  document.querySelectorAll('.rise').forEach((el) => io ? io.observe(el) : el.classList.add('in'));
   const tabs = [...document.querySelectorAll('.seg button')];
   const show = (t) => tabs.forEach((x) => {
     const on = x === t;

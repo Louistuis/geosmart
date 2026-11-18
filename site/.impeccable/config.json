@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "public/index.html"
+        ],
+        "createdAt": "2026-11-18T19:33:33.071Z",
+        "reason": "Claude: false positive, .mist sections have padding var(--ls-section) = clamp(84px, 10.56vw, 152px); detector cannot resolve the token"
+      }
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+/* Louis Studios site layer for GeoSmart (calm, light), from compose_page pg_1aqmew0.
+   Loaded after louis-studios-theme.css. Colours come only from the theme tokens.
+   Changed for this site: no gradients, no coloured shadows. */
+:root {
+  --lss-max: 1150px;
+  --lss-gutter: clamp(20px, 2.22vw, 32px);
+  --lss-section: clamp(64px, 7.5vw, 112px);
+  --lss-h1: clamp(44px, 7.4vw, 104px);
+  --lss-h2: clamp(32px, 3.6vw, 52px);
+  --lss-h3: clamp(19px, 1.5vw, 22px);
+  --lss-lead: clamp(18px, 1.46vw, 21px);
+  --lss-body: 17px;
+  --lss-tight: 1.06;
+  --lss-r: 12px;
+  --lss-r-sm: 6px;
+  --lss-r-lg: 19px;
+  --lss-r-control: 8px;
+  --lss-hair: 1px;
+  --lss-tracking: max(-0.04em, var(--ls-display-tracking));
+  --lss-shadow: 0 1px 2px color-mix(in srgb, var(--ls-ink) 6%, transparent), 0 12px 32px -18px color-mix(in srgb, var(--ls-ink) 22%, transparent);
+}
+html { background: var(--ls-bg); color: var(--ls-ink); scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; accent-color: var(--ls-accent); }
+body { margin: 0; background: var(--ls-bg); color: var(--ls-ink); font: 400 var(--lss-body)/1.6 var(--ls-font-text); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+*, *::before, *::after { box-sizing: border-box; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .24em; }
+:focus-visible { outline: 2px solid var(--ls-accent); outline-offset: 3px; border-radius: 2px; }
+.lss-wrap { width: 100%; max-width: calc(var(--lss-max) + 2 * var(--lss-gutter)); margin-inline: auto; padding-inline: var(--lss-gutter); }
+.lss-section { padding-block: var(--lss-section); scroll-margin-top: 88px; }
+.lss-h1, .lss-h2, .lss-h3 { margin: 0; font-family: var(--ls-font-display); font-weight: var(--ls-display-weight); letter-spacing: var(--lss-tracking); text-wrap: balance; }
+.lss-h1 { font-size: var(--lss-h1); line-height: var(--lss-tight); }
+.lss-h2 { font-size: var(--lss-h2); line-height: 1.1; }
+.lss-h3 { font-size: var(--lss-h3); line-height: 1.25; letter-spacing: -0.02em; }
+.lss-lead { margin: 0; font-size: var(--lss-lead); line-height: 1.5; color: var(--ls-muted); max-width: 34em; text-wrap: pretty; }
+.lss-text { margin: 0; color: var(--ls-muted); max-width: 65ch; text-wrap: pretty; }
+.lss-meta { margin: 0; color: var(--ls-accent); font: 600 15px/1.4 var(--ls-font-text); }
+.lss-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 24px; border: 0; border-radius: var(--lss-r-control);
+  background: var(--ls-accent); color: var(--ls-on-accent); font: 600 16px/1 var(--ls-font-text); text-decoration: none; cursor: pointer;
+  transition: transform var(--ls-duration) var(--ls-ease), background-color var(--ls-duration-fast) var(--ls-ease); }
+.lss-btn:hover { background: var(--ls-accent-2); transform: translateY(-1px); }
+.lss-btn:active { transform: none; }
+.lss-quiet { display: inline-flex; align-items: center; min-height: 48px; padding: 0 4px; color: var(--ls-ink); font-weight: 500; text-decoration: underline; text-decoration-color: var(--ls-line); text-underline-offset: .35em;
+  transition: text-decoration-color var(--ls-duration) var(--ls-ease); }
+.lss-quiet:hover { text-decoration-color: var(--ls-accent); }
+.lss-skip { position: absolute; left: 12px; top: -80px; z-index: 100; padding: 10px 16px; border-radius: var(--lss-r-control); background: var(--ls-ink); color: var(--ls-bg); text-decoration: none; }
+.lss-skip:focus { top: 12px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
