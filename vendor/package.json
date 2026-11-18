@@ -1,0 +1,10 @@
+{
+  "name": "geosmart-vendor",
+  "private": true,
+  "description": "Runtime dependencies copied into GeoGebra by patch.sh",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.10.0",
+    "katex": "^0.19.1"
+  }
+}
