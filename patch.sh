@@ -25,6 +25,13 @@ BIN="$TARGET/Contents/MacOS/GeoGebra Classic 6"
 [ -w "$APP" ] || { echo "No write access to $TARGET. Run with sudo."; exit 1; }
 if pgrep -f "$TARGET/Contents/MacOS/" >/dev/null 2>&1; then echo "Quit GeoGebra first, then run this again."; exit 1; fi
 
+# A fresh App Store copy runs in Apple's app sandbox, which stops its Electron
+# (run as Node below) from reading the patcher. Re-sign ad hoc first: that
+# drops the sandbox, and the changed files need a new signature anyway.
+if [ "$MODE" = "apply" ]; then
+  codesign --force --deep --sign - "$TARGET" 2>&1 | grep -v "replacing existing signature" || true
+fi
+
 # GeoGebra's own Electron runs the patcher as Node, so nothing else is needed.
 if [ "$MODE" = "restore" ]; then
   ELECTRON_RUN_AS_NODE=1 "$BIN" "$HERE/patcher/patch.js" restore "$APP"

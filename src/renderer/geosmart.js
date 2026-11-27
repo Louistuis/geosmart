@@ -204,7 +204,7 @@
             if (!png) return { ok: false, error: 'Could not capture the graphics view.' };
             return { ok: true, image: png.replace(/^data:image\/png;base64,/, ''), result: 'Screenshot of Graphics view 1.', summary: '' };
         },
-        run_commands({ commands }) {
+        async run_commands({ commands }) {
             const g = api();
             const results = [];
             let okCount = 0;
@@ -215,7 +215,16 @@
                 const before = new Set(g.getAllObjectNames());
                 const xml0 = g.getXML();
                 let ok = false;
-                try { ok = g.evalCommand(cmd) === true; } catch (e) { ok = false; }
+                // GeoGebra loads its scripting commands lazily: until then the first
+                // SetColor/ZoomIn/... throws "Scripting commands not loaded yet".
+                for (let attempt = 0; attempt < 20; attempt++) {
+                    try { ok = g.evalCommand(cmd) === true; break; }
+                    catch (e) {
+                        ok = false;
+                        if (!/not loaded yet/i.test(String(e && e.message || e))) break;
+                        await new Promise((r) => setTimeout(r, 250));
+                    }
+                }
                 if (!ok) { try { ok = g.getXML() !== xml0; } catch (e) { /* ignore */ } }
                 if (!ok) {
                     results.push({ command: cmd, ok: false, error: 'No effect: GeoGebra rejected this command (unknown name, wrong arguments or syntax error) or it changed nothing. Check the English command syntax.' });
@@ -262,7 +271,7 @@
         },
         set_view({ xmin, xmax, ymin, ymax }) {
             if (!(xmax > xmin && ymax > ymin)) return { ok: false, error: 'xmax must be greater than xmin and ymax greater than ymin' };
-            api().evalCommand(`ZoomIn(${xmin},${ymin},${xmax},${ymax})`);
+            api().setCoordSystem(xmin, xmax, ymin, ymax); // API call, no lazy scripting module
             return { ok: true, edited: true, result: 'View updated.', summary: `View x ${xmin}…${xmax}, y ${ymin}…${ymax}` };
         },
     };
@@ -873,5 +882,7 @@
         await refreshSettings();
         // Warm up the CAS in the background so the first "cas" tool call is instant.
         setTimeout(() => { try { api().evalCommandCAS('1+1'); } catch (e) { /* ignore */ } }, 1500);
+        // Ask GeoGebra to load its scripting commands early (a no-op pan does it).
+        setTimeout(() => { try { api().evalCommand('Pan(0,0)'); } catch (e) { /* loads in the background */ } }, 1800);
     })();
 })();
